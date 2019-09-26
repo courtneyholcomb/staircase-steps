@@ -35,11 +35,32 @@ For six steps: 111111 21111 12111 11211 11121 11112 2211 2121 2112
 """
 
 
-def steps(n):
+def steps(stairs):
     """How many different ways can you climb a staircase of `n` steps?
 
     You can climb 1, 2, or 3 steps at a time.
     """
+
+    def get_combos(stairs):
+        """Get all combos of strides you could use to climb given stairs."""
+
+        combos = set()
+
+        for stride in [1, 2, 3]:
+
+            if stairs % stride == 0:
+                combos.add(str(stride) * int(stairs / stride))
+
+            if stairs > stride:
+                combos.update(str(stride) + combo
+                    for combo in get_combos(stairs - stride))
+
+        return combos
+
+    return len(get_combos(stairs))
+
+
+
 
 
 if __name__ == '__main__':
